@@ -7,9 +7,24 @@ function resolve (dir) {
   return path.join(__dirname, '..', dir)
 }
 
+function createEntryPoints() {
+  if (config.entries && config.entries.length > 0) {
+    let entry = {};
+    for (let configEntry of config.entries) {
+      entry[configEntry.name] = configEntry.path;
+    }
+    return entry;
+  }
+  else {
+    return {
+      app: './src/main.js'
+    }
+  }
+}
+
 module.exports = {
   entry: {
-    app: './src/main.js'
+    app: createEntryPoints()
   },
   output: {
     path: config.build.assetsRoot,
@@ -49,6 +64,10 @@ module.exports = {
         test: /\.js$/,
         loader: 'babel-loader',
         include: [resolve('src'), resolve('test')]
+      },
+      {
+        test: /\.ejs$/,
+          loader: 'ejs-compiled-loader'
       },
       {
         test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,

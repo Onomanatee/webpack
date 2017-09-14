@@ -11,7 +11,7 @@ Object.keys(baseWebpackConfig.entry).forEach(function (name) {
   baseWebpackConfig.entry[name] = ['./build/dev-client'].concat(baseWebpackConfig.entry[name])
 })
 
-module.exports = merge(baseWebpackConfig, {
+let webpackConfig = merge(baseWebpackConfig, {
   module: {
     rules: utils.styleLoaders({ sourceMap: config.dev.cssSourceMap })
   },
@@ -24,12 +24,30 @@ module.exports = merge(baseWebpackConfig, {
     // https://github.com/glenjamin/webpack-hot-middleware#installation--usage
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NoEmitOnErrorsPlugin(),
-    // https://github.com/ampedandwired/html-webpack-plugin
-    new HtmlWebpackPlugin({
-      filename: 'index.html',
-      template: 'index.html',
-      inject: true
-    }),
-    new FriendlyErrorsPlugin()
+
+    // The other plugins are added dynamically below
   ]
-})
+});
+
+function createHtmlWebPackPlugin(filename, template, chunks = ['app']) {
+  return new HtmlWebpackPlugin({
+    filename: filename,
+    template: template,
+    inject: true,
+    chunks: chunks
+  });
+}
+
+// https://github.com/ampedandwired/html-webpack-plugin
+if (config.pages && config.pages.length) {
+  for (let page of config.pages) {
+    webpackConfig.plugins.push(createHtmlWebPackPlugin(page.name, page.path, page.chunks));
+  }
+}
+else {
+  webpackConfig.plugins.push(createHtmlWebPackPlugin('index.html', 'src/templates/index.html'));
+}
+
+webpackConfig.plugins.push(new FriendlyErrorsPlugin());
+
+module.exports = webpackConfig;
