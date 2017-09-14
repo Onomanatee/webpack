@@ -4,6 +4,10 @@
 
 > This template is Vue 2.0 compatible. For Vue 1.x use this command: `vue init webpack#1.0 my-project`
 
+## Changes
+
+This fork has a few small changes from the original, to allow multi-page applications. The original vue-webpack-boilerplate only works on SPAs, whereas I wanted to use it as well in a multi-page templating projecting. I'm using .ejs to compile these templates, and wanted the flexibility of injecting different vue apps into different pages.
+
 ## Documentation
 
 - [For this template](http://vuejs-templates.github.io/webpack): common questions specific to this template are answered and each part is described in greater detail

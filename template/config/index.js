@@ -2,9 +2,16 @@
 var path = require('path')
 
 module.exports = {
+  entries: [
+
+  ],
+  pages: [
+
+  ],
   build: {
     env: require('./prod.env'),
     index: path.resolve(__dirname, '../dist/index.html'),
+    indexSrc: path.resolve(__dirnam, '../src/templates/index.ejs'),
     assetsRoot: path.resolve(__dirname, '../dist'),
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
