@@ -45,7 +45,8 @@ if (config.pages && config.pages.length) {
   }
 }
 else {
-  webpackConfig.plugins.push(createHtmlWebPackPlugin('index.html', 'src/templates/index.html'));
+  let template = config.build.indexSrc ? config.build.indexSrc : 'index.html';
+  webpackConfig.plugins.push(createHtmlWebPackPlugin('index.html', template));
 }
 
 webpackConfig.plugins.push(new FriendlyErrorsPlugin());

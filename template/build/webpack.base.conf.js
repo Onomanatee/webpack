@@ -16,9 +16,7 @@ function createEntryPoints() {
     return entry;
   }
   else {
-    return {
-      app: './src/main.js'
-    }
+    return './src/main.js'
   }
 }
 
