@@ -58,9 +58,9 @@ var webpackConfig = merge(baseWebpackConfig, {
 // see https://github.com/ampedandwired/html-webpack-plugin
 function createHtmlWebPackPlugin(filename, template, chunks = ['app']) {
   chunks = chunks.concat(['vendor', 'manifest']);
-  return new HtmlWebpackPlugin({
+
+  let htmlWebpackConfig = {
     filename: filename,
-    template: template,
     inject: true,
     minify: {
       removeComments: true,
@@ -72,7 +72,13 @@ function createHtmlWebPackPlugin(filename, template, chunks = ['app']) {
     chunks: chunks,
     // necessary to consistently work with multiple chunks via CommonsChunkPlugin
     chunksSortMode: 'dependency'
-  });
+  };
+
+  if (template) {
+    htmlWebpackConfig.template = template;
+  }
+
+  return new HtmlWebpackPlugin(htmlWebpackConfig);
 }
 
 if (config.pages && config.pages.length) {

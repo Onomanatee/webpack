@@ -30,12 +30,18 @@ let webpackConfig = merge(baseWebpackConfig, {
 });
 
 function createHtmlWebPackPlugin(filename, template, chunks = ['app']) {
-  return new HtmlWebpackPlugin({
+  let htmlWebpackConfig = {
     filename: filename,
     template: template,
     inject: true,
     chunks: chunks
-  });
+  };
+
+  if (template) {
+    htmlWebpackConfig.template = template;
+  }
+
+  return new HtmlWebpackPlugin(htmlWebpackConfig);
 }
 
 // https://github.com/ampedandwired/html-webpack-plugin
