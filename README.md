@@ -4,9 +4,38 @@
 
 > This template is Vue 2.0 compatible. For Vue 1.x use this command: `vue init webpack#1.0 my-project`
 
-## Changes
+## Changes in this fork
 
 This fork has a few small changes from the original, to allow multi-page applications. The original vue-webpack-boilerplate only works on SPAs, whereas I wanted to use it as well in a multi-page templating projecting. I'm using .ejs to compile these templates, and wanted the flexibility of injecting different vue apps into different pages.
+
+### Using multiple html pages
+
+To allow this boilerplate to compile your templates and add the correct compiled scripts and styles, you need to add following configuration in the **config/index.js** file:
+
+```
+module.exports = {
+  entries: [
+    {
+      name: 'app',
+      path: './src/main.js'
+    }
+  ],
+  pages: [
+    {
+      name: 'index.html',
+      path: path.resolve(__dirname, '../src/templates/index.ejs'),
+      chunks: ['app']
+    }
+  ],
+  build: {
+   // the regular vue-webpack-boilerplate configuration
+  }
+}
+```
+
+As you can see, the entries and pages arrays are new additions in this fork. The entries array allows you to specify multiple entry points for your app, in case you want to create several compiled javascript bundles for optimization or divide your project in several smaller apps/modules.
+
+The pages array contains objects for each of your desired pages/templates. The name property defines the intended output name, the path points to an .ejs template file (which can use imports to keep your templates nice and DRY), and a chunks array. The chunks array contains one or several strings, equal to the 'name' attributes in the entries object. The compiled results (both styles and scripts) of each of these entries will be injected into the page.
 
 ## Documentation
 
