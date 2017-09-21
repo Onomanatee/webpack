@@ -16,14 +16,14 @@ function createEntryPoints() {
     return entry;
   }
   else {
-    return './src/main.js'
+    return {
+      app: './src/main.js'
+    }
   }
 }
 
 module.exports = {
-  entry: {
-    app: createEntryPoints()
-  },
+  entry: createEntryPoints(),
   output: {
     path: config.build.assetsRoot,
     filename: '[name].js',
